@@ -6,17 +6,22 @@
 #define MAX_ITER 10000
 #define TOL 1e-6
 
-double *u, *u_new;
+double *u, *u_new; /*Guarda dos arreglos (iteracion actual y la siguiente)*/
 int N;
 double h;
 
+/*Este código calcula los valores de una fila de puntos basándose 
+en una regla simple: el valor de cada punto debe ser el promedio 
+de sus dos vecinos (el de la izquierda y el de la derecha). 
+Para que las cuentas no se enreden, el programa usa dos listas de números: 
+consulta los valores viejos en una y anota los nuevos en la otra, repitiendo 
+este proceso miles de veces hasta que los números dejan de cambiar. */
+
 void poisson_secuencial(){
-
-    for(int k=0;k<MAX_ITER;k++){
-
+    for(int k=0;k<MAX_ITER;k++){  /*criterios de parada*/
         for(int i=1;i<N-1;i++){
             u_new[i] = 0.5 * (u[i-1] + u[i+1] - h*h * sin(3.141592653589793 * i*h));
-        }
+        }/*Stencil: Cada punto se calcula como el promedio de sus vecinos, restandole la funcion seno*/
 
         double error = 0.0;
 
